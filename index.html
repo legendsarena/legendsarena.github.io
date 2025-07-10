@@ -1,46 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ClaimZone - Home</title>
+  <title>ClaimZone Chat & Earn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #111;
-      color: #fff;
-      font-family: sans-serif;
+      padding: 0;
       text-align: center;
+    }
+    .container {
       padding: 20px;
     }
-    h1 {
-      color: violet;
-      font-size: 28px;
+    .message {
+      background-color: #1f1f1f;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px auto;
+      width: 90%;
+      max-width: 400px;
+      text-align: left;
     }
-    .button {
-      display: inline-block;
-      margin: 20px auto;
-      padding: 15px 30px;
+    input[type="text"] {
+      width: 90%;
+      max-width: 400px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin: 10px auto;
+      display: block;
+    }
+    button {
+      padding: 10px 20px;
       background-color: violet;
       color: black;
-      font-size: 18px;
       border: none;
-      border-radius: 10px;
-      text-decoration: none;
-    }
-    .description {
-      font-size: 16px;
-      color: #ccc;
-      margin-top: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
+  <script>
+    function handleSubmit() {
+      var username = document.getElementById("username").value;
+      if (username.trim() === "") {
+        alert("Please enter your Telegram username.");
+        return;
+      }
+      document.getElementById("chatbox").innerHTML = `
+        <div class='message'>✅ Thanks @${username}!<br>🪙 You earned <b>1 Coin</b>.<br>🕐 Come back tomorrow for more.</div>
+      `;
+    }
+  </script>
 </head>
 <body>
-  <h1>🎮 Welcome to ClaimZone</h1>
-  <p class="description">Play tournaments, earn rewards, and now... 💬 Chat & Earn coins!</p>
-
-  <a href="chat.html" class="button">💬 Chat & Earn</a>
-  <a href="https://t.me/+xgpCrU_PZNE5ZmI9" target="_blank">Join Now</a>
-  <p class="description">More features coming soon! Stay tuned.</p>
+  <div class="container" id="chatbox">
+    <div class="message">👋 Welcome to ClaimZone Chat & Earn!</div>
+    <div class="message">
+      📢 Task: Join our Telegram channel →
+      <a href="https://t.me/+xgpCrU_PZNE5ZmI9" target="_blank">Join Now</a>
+    </div>
+    <input type="text" id="username" placeholder="Enter your Telegram @username">
+    <button onclick="handleSubmit()">✅ Claim 1 Coin</button>
+  </div>
 </body>
 </html>

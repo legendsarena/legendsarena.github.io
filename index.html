@@ -1,41 +1,448 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ClaimZone Chat & Earn</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { background:#111; color:#fff; margin:0; font-family:sans-serif; text-align:center; }
-    iframe { width:100%; height:80vh; border:none; margin-top:20px; }
-    .btn { display:inline-block; padding:12px 24px; background:violet; color:black; border-radius:8px; text-decoration:none; margin-top:10px; }
-    .message { background:#222; padding:14px; margin:16px; border-radius:12px; }
-    a { color:violet; font-weight:bold; text-decoration:none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💍 AI Dowry Calculator — Aunty Intelligence™</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#D4A017;--gold2:#FFD700;--maroon:#7B1C1C;--deep:#0f0200;--cream:#FDF6E3;--card:#FFF9EE}
+body{min-height:100vh;background:var(--deep);font-family:'Poppins',sans-serif;overflow-x:hidden}
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 15% 10%,rgba(123,28,28,.55),transparent),radial-gradient(ellipse 50% 40% at 85% 90%,rgba(80,10,10,.5),transparent)}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:float linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.6}90%{opacity:.3}100%{transform:translateY(-20vh) scale(1.2);opacity:0}}
+.wrap{max-width:660px;margin:0 auto;padding:16px 14px 40px;position:relative;z-index:1}
+
+/* ── AD BANNER STYLES ── */
+.ad-banner{width:100%;background:rgba(255,255,255,.04);border:1.5px dashed rgba(212,160,23,.25);border-radius:14px;display:flex;align-items:center;justify-content:center;color:rgba(212,160,23,.4);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;overflow:hidden;margin:14px 0}
+.ad-banner.top{min-height:60px}
+.ad-banner.mid{min-height:90px}
+.ad-banner.bottom{min-height:100px;margin-top:20px}
+/* When real ads load, the placeholder text hides automatically */
+.ad-banner:not(:empty) .ad-placeholder{display:none}
+.ad-placeholder{padding:14px;text-align:center}
+
+/* ── HEADER ── */
+.header{text-align:center;padding:20px 0 16px;position:relative}
+.header-ring{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:240px;height:240px;border-radius:50%;border:1px solid rgba(212,160,23,.1);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--gold),#A07810);color:#1A0A0A;font-size:.58rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:5px 18px;border-radius:99px;margin-bottom:10px;box-shadow:0 4px 20px rgba(212,160,23,.35)}
+.emoji-title{font-size:2.4rem;display:block;margin-bottom:-4px;filter:drop-shadow(0 4px 12px rgba(212,160,23,.5));animation:ring-pulse 3s ease-in-out infinite}
+@keyframes ring-pulse{0%,100%{filter:drop-shadow(0 4px 12px rgba(212,160,23,.5))}50%{filter:drop-shadow(0 4px 24px rgba(212,160,23,.9))}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;background:linear-gradient(135deg,#FFD700,#D4A017,#FFF5CC,#D4A017);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(212,160,23,.4))}
+h1 .white{background:linear-gradient(135deg,#FDF6E3,#fff);-webkit-background-clip:text;background-clip:text;filter:none}
+.sub{color:rgba(253,246,227,.45);font-size:.82rem;font-style:italic;margin-top:6px}
+.disc{background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.18);border-radius:12px;padding:10px 14px;color:rgba(253,246,227,.55);font-size:.7rem;text-align:center;margin-bottom:18px;line-height:1.6}
+
+/* ── STEP TABS ── */
+.steps{display:flex;gap:6px;margin-bottom:16px;background:rgba(255,255,255,.04);border-radius:14px;padding:5px}
+.step-btn{flex:1;padding:9px 6px;border-radius:10px;border:none;background:transparent;color:rgba(255,255,255,.3);font-size:.68rem;font-weight:700;cursor:pointer;transition:.25s;font-family:'Poppins',sans-serif}
+.step-btn.active{background:linear-gradient(135deg,var(--maroon),#A02020);color:var(--gold);box-shadow:0 4px 16px rgba(123,28,28,.5)}
+.step-btn.done{color:rgba(212,160,23,.6)}
+
+/* ── CARDS ── */
+.card{background:linear-gradient(160deg,rgba(255,252,240,.98),rgba(255,248,230,.96));border-radius:20px;padding:22px;margin-bottom:14px;border:1px solid rgba(212,160,23,.2);box-shadow:0 12px 40px rgba(0,0,0,.45),0 1px 0 rgba(255,255,255,.5) inset;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(212,160,23,.08),transparent 70%);pointer-events:none}
+.ctitle{font-family:'Playfair Display',serif;font-weight:700;color:var(--maroon);margin-bottom:18px;font-size:1.05rem;display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(212,160,23,.2)}
+.ctitle-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--maroon),#A02020);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 4px 12px rgba(123,28,28,.4);flex-shrink:0}
+.flabel{display:block;font-size:.72rem;font-weight:700;color:#5a2a2a;margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase}
+select,input[type=number]{width:100%;padding:11px 14px;border:1.5px solid rgba(212,184,150,.6);border-radius:12px;background:linear-gradient(135deg,#FFFDF5,#FFF8E8);font-size:.88rem;margin-bottom:14px;color:#1A0A0A;font-family:'Poppins',sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:1px}
+input[type=range]{width:100%;accent-color:var(--maroon);cursor:pointer;margin:6px 0;height:6px}
+.range-val{font-weight:800;color:var(--maroon);font-size:1.05rem;margin-left:6px;font-family:'Playfair Display',serif}
+.note{font-size:.68rem;color:#9a7a7a;font-style:italic;margin-left:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{display:flex;align-items:flex-start;gap:9px;padding:11px;border:1.5px solid rgba(212,184,150,.5);border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#FFFDF5,#FFF8E8);transition:.2s;user-select:none;position:relative;overflow:hidden}
+.chk.on{border-color:var(--maroon);background:linear-gradient(135deg,#FFF5EE,#FFE8E0)}
+.chkbox{width:20px;height:20px;border-radius:6px;border:2px solid rgba(212,184,150,.6);display:flex;align-items:center;justify-content:center;color:white;font-size:12px;flex-shrink:0;margin-top:1px;transition:.2s;font-weight:900}
+.chk.on .chkbox{background:linear-gradient(135deg,var(--maroon),#A02020);border-color:var(--maroon);box-shadow:0 2px 8px rgba(123,28,28,.4)}
+.attr-name{font-size:.78rem;color:#3a1a1a;font-weight:600;line-height:1.3}
+.attr-funny{font-size:.62rem;margin-top:2px;font-style:italic;font-weight:400}
+.pos{color:#15803d}.neg{color:#dc2626}
+.nav-btns{display:flex;gap:10px;margin-top:14px}
+.back-btn{flex:1;padding:13px;background:rgba(255,255,255,.1);border:1.5px solid rgba(212,160,23,.25);border-radius:14px;color:rgba(212,160,23,.7);font-size:.88rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:.2s}
+.next-btn{flex:2;padding:13px;background:linear-gradient(135deg,var(--maroon),#B02020);border:none;border-radius:14px;color:var(--gold);font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;letter-spacing:.5px;box-shadow:0 6px 20px rgba(123,28,28,.5);transition:.2s}
+
+/* ── ORACLE ── */
+.oracle-screen{display:none;text-align:center;padding:30px 10px}
+.oracle-screen.active{display:block}
+.oracle-orb{width:120px;height:120px;margin:0 auto 18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(212,160,23,.3),rgba(123,28,28,.6));border:2px solid rgba(212,160,23,.35);box-shadow:0 0 40px rgba(212,160,23,.25),inset 0 0 30px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:3rem;animation:orb-pulse 2.5s ease-in-out infinite}
+@keyframes orb-pulse{0%,100%{box-shadow:0 0 40px rgba(212,160,23,.25)}50%{box-shadow:0 0 80px rgba(212,160,23,.5)}}
+.oracle-text{color:rgba(253,246,227,.55);font-size:.88rem;margin-bottom:20px;line-height:1.6}
+.calc-btn{width:100%;padding:18px;background:linear-gradient(135deg,#8B1010,#C02020,#8B1010);border:none;border-radius:16px;color:var(--gold);font-size:1.1rem;font-weight:800;cursor:pointer;font-family:'Playfair Display',serif;letter-spacing:1px;box-shadow:0 8px 30px rgba(123,28,28,.6);animation:btn-pulse 2s ease-in-out infinite;position:relative;overflow:hidden;margin-bottom:10px}
+.calc-btn::before{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.08);transform:skewX(-15deg);animation:shine-sweep 3s ease-in-out infinite}
+@keyframes btn-pulse{0%,100%{box-shadow:0 8px 30px rgba(123,28,28,.6)}50%{box-shadow:0 8px 50px rgba(212,160,23,.4)}}
+@keyframes shine-sweep{0%{left:-60%}100%{left:160%}}
+.edit-btn{width:100%;padding:11px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:12px;color:rgba(255,255,255,.3);font-size:.82rem;cursor:pointer;font-family:'Poppins',sans-serif}
+
+/* ── LOADING ── */
+.loading{display:none;text-align:center;padding:40px 20px}
+.loading-ring{width:70px;height:70px;margin:0 auto 16px;position:relative}
+.loading-ring::before,.loading-ring::after{content:'';position:absolute;border-radius:50%;border:3px solid transparent}
+.loading-ring::before{inset:0;border-top-color:var(--gold);animation:spin .8s linear infinite}
+.loading-ring::after{inset:8px;border-top-color:rgba(212,160,23,.4);animation:spin 1.2s linear infinite reverse}
+.loading-dot{width:20px;height:20px;background:var(--gold);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 12px var(--gold)}
+.load-text{color:var(--gold);font-size:.9rem;font-style:italic}
+.load-sub{color:rgba(253,246,227,.4);font-size:.72rem;margin-top:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── RESULT ── */
+#result{display:none}
+.rcard{background:linear-gradient(160deg,#160202,#2d0606,#1a0303);border:2px solid rgba(212,160,23,.5);border-radius:22px;padding:28px;text-align:center;margin-top:14px;box-shadow:0 0 80px rgba(212,160,23,.18),0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(212,160,23,.15);animation:result-in .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes result-in{from{transform:scale(.7) translateY(30px);opacity:0}to{transform:scale(1);opacity:1}}
+.ornament{color:rgba(212,160,23,.4);letter-spacing:8px;font-size:1rem;margin-bottom:8px;display:block}
+.r-lbl{font-size:.6rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.6;margin-bottom:10px}
+.r-amt{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,9vw,3.8rem);font-weight:900;line-height:1;background:linear-gradient(135deg,#FFD700,#D4A017,#FFF5CC,#D4A017);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(212,160,23,.5));animation:shimmer-text 3s ease-in-out infinite}
+@keyframes shimmer-text{0%,100%{filter:drop-shadow(0 0 20px rgba(212,160,23,.5))}50%{filter:drop-shadow(0 0 40px rgba(212,160,23,.9))}}
+.r-sub{color:rgba(253,246,227,.4);font-size:.72rem;font-style:italic;margin-top:5px;margin-bottom:6px}
+.meter-wrap{margin:20px 0 16px}
+.meter-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.meter-lbl{font-size:.65rem;color:rgba(253,246,227,.45);letter-spacing:2px;text-transform:uppercase}
+.meter-status{font-size:.8rem;font-weight:700}
+.meter-track{height:16px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.meter-fill{height:100%;border-radius:99px;transition:width 1.4s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.meter-fill::after{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:meter-shine 2s ease-in-out infinite}
+@keyframes meter-shine{to{left:180%}}
+.aunty-box{background:rgba(255,255,255,.04);border:1px solid rgba(212,160,23,.18);border-radius:16px;padding:18px;margin:20px 0;display:flex;gap:14px;align-items:flex-start;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.aunty-avatar{width:60px;height:60px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,var(--maroon),#500808);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 6px 20px rgba(123,28,28,.5)}
+.aunty-name{font-size:.58rem;color:var(--gold);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:5px}
+.aunty-msg{color:rgba(253,246,227,.88);font-size:.86rem;line-height:1.55;font-style:italic}
+.bkbox{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px;margin-bottom:18px;text-align:left}
+.bk-title{color:var(--gold);font-size:.6rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;opacity:.65}
+.bk-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.79rem}
+.bk-row:last-child{border-bottom:none}
+.bk-name{color:rgba(253,246,227,.6)}
+.bk-val{font-weight:700;font-family:'Playfair Display',serif}
+.action-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.share-btn{background:linear-gradient(135deg,rgba(212,160,23,.2),rgba(212,160,23,.1));border:1.5px solid rgba(212,160,23,.4);color:var(--gold);padding:12px 24px;border-radius:12px;cursor:pointer;font-size:.82rem;font-family:'Poppins',sans-serif;font-weight:600;transition:.2s}
+.reset-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);padding:12px 24px;border-radius:12px;cursor:pointer;font-size:.82rem;font-family:'Poppins',sans-serif}
+.confetti-piece{position:fixed;top:-20px;border-radius:3px;animation:cfal 3s ease-in forwards;pointer-events:none;z-index:9999}
+@keyframes cfal{0%{transform:translateY(0) rotate(0deg);opacity:.9}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.step-view{display:none}.step-view.active{display:block}
+.divider{text-align:center;color:rgba(212,160,23,.25);letter-spacing:10px;font-size:.9rem;margin:10px 0}
+footer{text-align:center;color:rgba(253,246,227,.15);font-size:.65rem;padding:28px 0;line-height:1.9}
+@media(max-width:420px){.two,.grid2{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <h2>💬 ClaimZone Chat & Earn</h2>
 
-  <div class="message">
-    📢 Task 1: Join our Telegram channel →  
-    <a href="https://t.me/+xgpCrU_PZNE5ZmI9" target="_blank">Join Now</a>
+<div id="particles"></div>
+<div class="bg-glow"></div>
+<div id="confetti-box" style="position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden"></div>
+
+<div class="wrap">
+
+  <!-- ════════════════════════════════════════
+       📢 AD BANNER — TOP
+       Paste your Adsterra banner code below
+       ════════════════════════════════════════ -->
+  <div class="ad-banner top">
+    <!-- PASTE ADSTERRA TOP BANNER CODE HERE -->
+    <div class="ad-placeholder">📢 Advertisement</div>
   </div>
 
-  <div class="message">
-    💰 <b>Offer Wall: Complete Any Offer & Earn Coins</b><br><br>
-
-    🔹 <b>Offer 1:</b> Install App & Earn <b>10 Coins</b><br>
-    👉 <a href="https://singingfiles.com/show.php?l=0&u=2421068&id=70740" target="_blank">📲 Start Offer 1</a><br><br>
-
-    🔹 <b>Offer 2:</b> Sign Up / Survey & Earn <b>8 Coins</b><br>
-    👉 <a href="https://singingfiles.com/show.php?l=0&u=2421068&id=70069" target="_blank">📝 Start Offer 2</a><br><br>
-
-    🔹 <b>Offer 3:</b> Bonus Offer & Earn <b>5 Coins</b><br>
-    👉 <a href="https://singingfiles.com/show.php?l=0&u=2421068&id=58609&tracking_id=" target="_blank">🎁 Start Offer 3</a><br><br>
-
-    📤 After completing any offer, send screenshot on Telegram to get coins.
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-ring"></div>
+    <span class="emoji-title">💍</span>
+    <div class="badge">✦ AI Powered ✦ 100% Scientific ✦</div>
+    <h1><span class="white">Dowry</span> Calculator</h1>
+    <p class="sub">Powered by Aunty Intelligence™</p>
   </div>
 
-  <iframe src="https://typebot.co/embed/my-typebot-1-gwciurj"></iframe>
+  <div class="disc">⚠️ <b>Satire only!</b> Dowry is illegal & morally wrong. This is a joke app — laugh, don't enforce 😂</div>
 
-  <a href="https://legendsarena.github.io" class="btn">🔙 Back to ClaimZone</a>
+  <!-- STEP TABS -->
+  <div class="steps">
+    <button class="step-btn active" id="tab1" onclick="goStep(1)">🤵 Groom</button>
+    <button class="step-btn" id="tab2" onclick="goStep(2)">⭐ Extras</button>
+    <button class="step-btn" id="tab3" onclick="goStep(3)">👨‍👩 Family</button>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-view active" id="step1">
+    <div class="card">
+      <div class="ctitle"><div class="ctitle-icon">🤵</div>About the Groom</div>
+      <div class="two">
+        <div>
+          <label class="flabel">📚 Education</label>
+          <select id="edu">
+            <option value="1">High School</option>
+            <option value="1.5">Bachelor's</option>
+            <option value="2" selected>Master's</option>
+            <option value="2.5">MBBS / Engg</option>
+            <option value="3">PhD</option>
+            <option value="3.5">IIT/IIM/Oxbridge 🏆</option>
+          </select>
+        </div>
+        <div>
+          <label class="flabel">💼 Job Type</label>
+          <select id="job">
+            <option value="1">Unemployed 😶</option>
+            <option value="1.5">Private Sector</option>
+            <option value="2" selected>Govt Job 🏛️</option>
+            <option value="2.5">Business Owner</option>
+            <option value="3">Software (Abroad) 🇺🇸</option>
+            <option value="3.5">Doctor / IAS 👑</option>
+          </select>
+        </div>
+      </div>
+      <label class="flabel">💰 Monthly Income (₹)</label>
+      <input type="number" id="income" value="80000" min="0" step="5000">
+      <div style="margin-bottom:16px">
+        <label class="flabel">🎂 Age: <span class="range-val" id="age-val">28</span><span class="note" id="age-note"></span></label>
+        <input type="range" id="age" min="21" max="50" value="28" oninput="updateAge()">
+        <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#9a7a7a;margin-top:3px"><span>21</span><span>35</span><span>50</span></div>
+      </div>
+      <div style="margin-bottom:4px">
+        <label class="flabel">📏 Height: <span class="range-val" id="ht-val">5'8"</span></label>
+        <input type="range" id="ht" min="0" max="8" value="4" oninput="updateHt()">
+        <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#9a7a7a;margin-top:3px"><span>5'4"</span><span>5'9"</span><span>6'2"+</span></div>
+      </div>
+      <button class="next-btn" style="width:100%;margin-top:16px" onclick="goStep(2)">Next: Special Attributes →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-view" id="step2">
+    <div class="card">
+      <div class="ctitle"><div class="ctitle-icon">⭐</div>Special Attributes <span style="font-size:.68rem;font-weight:400;color:#9a7a7a;margin-left:4px">tap to select</span></div>
+      <div class="grid2" id="attrs-grid"></div>
+
+      <!-- ════════════════════════════════════════
+           📢 AD BANNER — MIDDLE
+           Paste your Adsterra banner code below
+           ════════════════════════════════════════ -->
+      <div class="ad-banner mid" style="margin-top:14px">
+        <!-- PASTE ADSTERRA MIDDLE BANNER CODE HERE -->
+        <div class="ad-placeholder">📢 Advertisement</div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="back-btn" onclick="goStep(1)">← Back</button>
+        <button class="next-btn" onclick="goStep(3)">Next: Family →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-view" id="step3">
+    <div class="card">
+      <div class="ctitle"><div class="ctitle-icon">👨‍👩</div>Family Details</div>
+      <div class="two">
+        <div>
+          <label class="flabel">🏡 Family Status</label>
+          <select id="family">
+            <option value="0.8">Lower Middle</option>
+            <option value="1" selected>Middle Class</option>
+            <option value="1.3">Upper Middle</option>
+            <option value="1.6">Rich / Business</option>
+            <option value="2">Zamindaar 👑</option>
+          </select>
+        </div>
+        <div>
+          <label class="flabel">🙏 Community</label>
+          <select id="caste">
+            <option value="1" selected>Same Community</option>
+            <option value="0.9">Different Community</option>
+            <option value="1.1">High-status</option>
+            <option value="0.8">Love Marriage 💕</option>
+          </select>
+        </div>
+      </div>
+      <label class="flabel">👧 Groom's Unmarried Sisters</label>
+      <div style="font-size:.68rem;color:#dc2626;font-style:italic;margin-bottom:6px">Each = -₹1.5L from dowry 😅</div>
+      <input type="number" id="sisters" value="0" min="0" max="10">
+      <div class="nav-btns">
+        <button class="back-btn" onclick="goStep(2)">← Back</button>
+        <button class="next-btn" onclick="goStep(4)">Calculate Now →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORACLE SCREEN -->
+  <div class="oracle-screen" id="step4">
+    <div class="oracle-orb">🔮</div>
+    <p class="oracle-text">The sacred oracles of Aunty Intelligence™<br>are ready to determine the value.</p>
+    <button class="calc-btn" onclick="calculate()">🧮 Reveal My Dowry Value!</button>
+    <button class="edit-btn" onclick="goStep(3)">← Go Back & Edit</button>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="loading-ring"><div class="loading-dot"></div></div>
+    <div class="load-text">Aunty ji is calculating...</div>
+    <div class="load-sub">Consulting 47 rishtedar databases... 🧮</div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result">
+    <div class="divider">✦ ◈ ✦ ◈ ✦</div>
+    <div class="rcard">
+      <span class="ornament">✦ ◈ ✦</span>
+      <div class="r-lbl">✨ Aunty Intelligence™ Has Spoken ✨</div>
+      <div class="r-amt" id="r-amt">₹0</div>
+      <div class="r-sub">+ Gold jewellery + Fridge + Scooter (negotiable 😏)</div>
+      <div class="meter-wrap">
+        <div class="meter-top">
+          <span class="meter-lbl">🪄 Rishta Meter</span>
+          <span class="meter-status" id="meter-status"></span>
+        </div>
+        <div class="meter-track">
+          <div class="meter-fill" id="meter-fill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="aunty-box">
+        <div class="aunty-avatar" id="aunty-emoji">😊</div>
+        <div>
+          <div class="aunty-name" id="aunty-name">Aunty Says</div>
+          <div class="aunty-msg" id="aunty-msg"></div>
+        </div>
+      </div>
+      <div class="bkbox">
+        <div class="bk-title">💰 Price Breakdown</div>
+        <div id="bk-rows"></div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+           📢 AD BANNER — AFTER RESULT
+           Paste your Adsterra banner code below
+           ════════════════════════════════════════ -->
+      <div class="ad-banner mid" style="margin-bottom:16px">
+        <!-- PASTE ADSTERRA RESULT BANNER CODE HERE -->
+        <div class="ad-placeholder">📢 Advertisement</div>
+      </div>
+
+      <div class="action-btns">
+        <button class="share-btn" onclick="shareResult()" id="share-btn">📤 Share with Friends</button>
+        <button class="reset-btn" onclick="resetAll()">🔄 Recalculate</button>
+      </div>
+    </div>
+    <div class="divider" style="margin-top:14px">✦ ◈ ✦ ◈ ✦</div>
+
+    <!-- ════════════════════════════════════════
+         📢 AD BANNER — BOTTOM
+         Paste your Adsterra banner code below
+         ════════════════════════════════════════ -->
+    <div class="ad-banner bottom">
+      <!-- PASTE ADSTERRA BOTTOM BANNER CODE HERE -->
+      <div class="ad-placeholder">📢 Advertisement</div>
+    </div>
+  </div>
+
+  <footer>
+    💍 AI Dowry Calculator • Powered by Aunty Intelligence™<br>
+    <b style="color:rgba(253,246,227,.25)">Satire only.</b> People are not price tags. Dowry is illegal & harmful.<br>
+    Share with your college group & watch the chaos 😂
+  </footer>
+</div>
+
+<script>
+const HEIGHTS=["5'4\"","5'5\"","5'6\"","5'7\"","5'8\"","5'9\"","6'0\"","6'1\"","6'2\"+"];
+const HEIGHT_MUL=[0.88,0.91,0.94,0.98,1.01,1.05,1.09,1.12,1.16];
+const ATTRS=[
+  {e:"🌍",label:"Abroad Settled",    val:500000, funny:"Visa wala damad!",      pos:true},
+  {e:"🏠",label:"Own House",          val:300000, funny:"Ghar wala launda!",     pos:true},
+  {e:"🚗",label:"Car Owner",          val:200000, funny:"Gaadi chalata hai!",    pos:true},
+  {e:"👦",label:"Only Son",           val:150000, funny:"Iklauta beta!",         pos:true},
+  {e:"🍳",label:"Cooks & Cleans",     val:100000, funny:"Rare species found!",   pos:true},
+  {e:"💪",label:"Gym Body",           val:80000,  funny:"Hero jaisa figure!",    pos:true},
+  {e:"😬",label:"Mama's Boy",         val:-200000,funny:"Saas problem pakki!",   pos:false},
+  {e:"🚬",label:"Smokes / Drinks",    val:-100000,funny:"Health risk!",          pos:false},
+  {e:"📱",label:"Social Media Addict",val:-80000, funny:"Reels hi dekhta hai!", pos:false},
+  {e:"🎸",label:"Plays Music",        val:60000,  funny:"Gaana gaata hai!",      pos:true},
+];
+const AUNTY=[
+  {max:300000,  e:"😴",name:"Sleeping Aunty",  msg:"Arrey beta... ye toh meri chappals ki value hai. Rishta band karo ji."},
+  {max:800000,  e:"🤨",name:"Suspicious Aunty",msg:"Hmm... theek hai theek hai. But meri beti deserve karta more. Sochenge."},
+  {max:2000000, e:"😊",name:"Happy Aunty",      msg:"Acchha hai acchha hai! Rishta aage badhaao. Chai pilao sabko!"},
+  {max:5000000, e:"🤩",name:"Excited Aunty",    msg:"WAAAAH! Beta mujhe pehle kyun nahi bataya?! Shaadi ki date nikalo ABHI!"},
+  {max:15000000,e:"🥳",name:"Dancing Aunty",    msg:"SHAADI PAKKI! Main abhi baraat leke aati hoon! DJ wala bulao!"},
+  {max:Infinity,e:"🫵",name:"Shocked Aunty",    msg:"Bhai... ITNA?! Tu Ambani ka bhaanja hai kya?! Reservation karo meri beti ke liye!"},
+];
+const CONFETTI=["#D4A017","#FFD700","#C0434B","#FDF6E3","#FF6B6B","#FF8C00"];
+
+// Particles
+(function(){const c=document.getElementById('particles');for(let i=0;i<18;i++){const el=document.createElement('div');el.className='particle';const s=3+Math.random()*5;el.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:rgba(212,160,23,${.2+Math.random()*.3});animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s`;c.appendChild(el);}})();
+
+// Build attrs
+const grid=document.getElementById('attrs-grid');
+let checked={};
+ATTRS.forEach((a,i)=>{
+  const d=document.createElement('div');
+  d.className='chk';d.id='chk'+i;
+  d.innerHTML=`<div class="chkbox" id="cb${i}"></div><div><div class="attr-name">${a.e} ${a.label}</div><div class="attr-funny ${a.pos?'pos':'neg'}">${a.pos?'+':''}${fmt(a.val)} • ${a.funny}</div></div>`;
+  d.onclick=()=>toggle(i,d);
+  grid.appendChild(d);
+});
+
+function toggle(i,el){checked[i]=!checked[i];el.classList.toggle('on',checked[i]);document.getElementById('cb'+i).textContent=checked[i]?'✓':'';}
+
+function goStep(n){
+  document.querySelectorAll('.step-view').forEach(e=>e.classList.remove('active'));
+  document.getElementById('step4').classList.remove('active');
+  ['tab1','tab2','tab3'].forEach((id,i)=>{
+    const b=document.getElementById(id);b.classList.remove('active','done');
+    if(i+1===n)b.classList.add('active');else if(i+1<n)b.classList.add('done');
+  });
+  if(n<=3)document.getElementById('step'+n).classList.add('active');
+  else document.getElementById('step4').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateAge(){const v=document.getElementById('age').value;document.getElementById('age-val').textContent=v;document.getElementById('age-note').textContent=v>35?" (thoda late 😅)":v<25?" (young blood! 😎)":"";}
+function updateHt(){document.getElementById('ht-val').textContent=HEIGHTS[document.getElementById('ht').value];}
+
+function fmt(n){const a=Math.abs(n),s=n<0?'-':'';if(a>=10000000)return s+'₹'+(a/10000000).toFixed(2)+' Cr';if(a>=100000)return s+'₹'+(a/100000).toFixed(2)+' L';return s+'₹'+Math.round(a).toLocaleString('en-IN');}
+
+let lastResult=null;
+function calculate(){
+  document.getElementById('step4').classList.remove('active');
+  document.getElementById('loading').style.display='block';
+  document.getElementById('result').style.display='none';
+  setTimeout(()=>{
+    const edu=+document.getElementById('edu').value,job=+document.getElementById('job').value;
+    const income=+document.getElementById('income').value||0,age=+document.getElementById('age').value;
+    const ht=+document.getElementById('ht').value,family=+document.getElementById('family').value;
+    const caste=+document.getElementById('caste').value,sisters=+document.getElementById('sisters').value||0;
+    const ageFac=age<=28?1.1:age<=33?1.0:age<=38?0.85:0.7;
+    const base=income*24,eduB=edu*300000,jobB=job*400000;
+    const htB=(HEIGHT_MUL[ht]-1)*600000,famB=(family-1)*700000,sisD=sisters*150000;
+    const attrB=ATTRS.reduce((s,a,i)=>s+(checked[i]?a.val:0),0);
+    let total=(base+eduB+jobB+htB+famB+attrB-sisD)*caste*ageFac;
+    total=Math.max(total,50000);
+    lastResult={total,base,eduB,jobB,htB,famB,sisD,attrB};
+    const aunty=AUNTY.find(a=>total<a.max);
+    const pct=Math.min((total/20000000)*100,100);
+    const color=pct<25?'#ef4444':pct<50?'#f59e0b':pct<75?'#22c55e':'#D4A017';
+    const mStatus=pct<20?"😴 Arey bhai...":pct<40?"🤨 Theek hai...":pct<60?"😊 Accha accha!":pct<80?"🤩 Wah wah!":"🔥 SHAADI PAKKI!";
+    document.getElementById('loading').style.display='none';
+    document.getElementById('result').style.display='block';
+    document.getElementById('r-amt').textContent=fmt(total);
+    document.getElementById('aunty-emoji').textContent=aunty.e;
+    document.getElementById('aunty-name').textContent=aunty.name+' says:';
+    document.getElementById('aunty-msg').textContent='"'+aunty.msg+'"';
+    document.getElementById('meter-status').textContent=mStatus;
+    document.getElementById('meter-status').style.color=color;
+    setTimeout(()=>{const f=document.getElementById('meter-fill');f.style.width=pct+'%';f.style.background=`linear-gradient(90deg,${color}88,${color})`;f.style.boxShadow=`0 0 16px ${color}77`;},150);
+    const rows=[['Base (24× monthly income)',base],['🎓 Education premium',eduB],['💼 Job premium',jobB],['📏 Height bonus',htB],['🏡 Family status',famB],['⭐ Attribute bonuses',attrB],['👧 Sisters tax',-sisD]];
+    document.getElementById('bk-rows').innerHTML=rows.map(([n,v])=>`<div class="bk-row"><span class="bk-name">${n}</span><span class="bk-val" style="color:${v>=0?'#D4A017':'#ef4444'}">${fmt(v)}</span></div>`).join('');
+    if(total>3000000)confetti();
+    document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+  },2000);
+}
+
+function confetti(){const box=document.getElementById('confetti-box');for(let i=0;i<60;i++){const el=document.createElement('div');el.className='confetti-piece';const sz=5+Math.random()*10;el.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${CONFETTI[Math.floor(Math.random()*CONFETTI.length)]};animation-delay:${Math.random()*1.5}s;animation-duration:${2+Math.random()*2}s;border-radius:${Math.random()>.5?'50%':'3px'};transform:rotate(${Math.random()*360}deg)`;box.appendChild(el);setTimeout(()=>el.remove(),4000);}}
+
+function shareResult(){
+  const text=`💍 My AI Dowry Value is ${fmt(lastResult.total)}!\n\nCalculate yours 👇\n[YOUR WEBSITE LINK HERE]\n\n😂 Powered by Aunty Intelligence™\n#DowryCalculator #Funny #Viral`;
+  if(navigator.share){navigator.share({title:'AI Dowry Calculator',text});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(text);const b=document.getElementById('share-btn');b.textContent='✅ Copied! Send to group!';setTimeout(()=>b.textContent='📤 Share with Friends',2500);}
+}
+
+function resetAll(){checked={};document.querySelectorAll('.chk').forEach(e=>e.classList.remove('on'));document.querySelectorAll('.chkbox').forEach(e=>e.textContent='');document.getElementById('result').style.display='none';document.getElementById('meter-fill').style.width='0%';goStep(1);}
+</script>
 </body>
 </html>
